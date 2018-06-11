@@ -2,7 +2,7 @@
 
 [Youtube Tutorial](https://www.youtube.com/watch?v=-44tVVR6ETo&list=PLFipfN18ZQwsW1_dge4w7dfsVNdNZZ37R&index=1)
 
-> Pour suivre ce tutoriel, veuillez à bien avoir respecté l'installation de la première partie [Installation](https://github.com/nebulasio/wiki/blob/master/tutorials/%5BEnglish%5D%20Nebulas%20101%20-%2001%20Installation.md).
+> Pour suivre ce tutoriel, veuillez a bien avoir respecté l'installation de la première partie [Installation](https://github.com/nebulasio/wiki/blob/master/tutorials/%5BEnglish%5D%20Nebulas%20101%20-%2001%20Installation.md).
 
 Nebulas fournit trois méthodes pour envoyer des transactions:
 
@@ -20,7 +20,9 @@ Préparez deux comptes: une adresse pour envoyer des tokens (l'adresse d'envoi, 
 
 ### L'emetteur
 
-Here we will use the coinbase account in `conf/example/miner.conf`, which uses `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE` as the sender. As the miner's coinbase account, it will receive some tokens as the mining reward. Then we could send these tokens to another account later.
+Ici nous allons utiliser le compte coinbase dans `conf/example/miner.conf` qui utilise `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE` en tant qu'emetteur.
+
+Here we will use the coinbase account in , which uses `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE` as the sender. As the miner's coinbase account, it will receive some tokens as the mining reward. Then we could send these tokens to another account later.
 
 ### Le récepteur
 
