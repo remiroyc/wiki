@@ -14,7 +14,7 @@ Ce tutoriel constitue une introduction pour vous permettre d'envoyer une transac
 
 ## Préparer vos comptes
 
-Sur Nebulas, chaque adresses représente un compte unique.
+Sur Nebulas, chaque adresse représente un compte unique.
 
 Préparez deux comptes: une adresse pour envoyer des tokens (l'adresse d'envoi, appelé "from") et l'adresse pour recevoir des tokens (l'adresse de reception, appelée "to").
 
