@@ -20,9 +20,7 @@ Préparez deux comptes: une adresse pour envoyer des tokens (l'adresse d'envoi, 
 
 ### L'emetteur
 
-Ici nous allons utiliser le compte coinbase dans `conf/example/miner.conf` qui utilise `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE` en tant qu'emetteur.
-
-Here we will use the coinbase account in , which uses `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE` as the sender. As the miner's coinbase account, it will receive some tokens as the mining reward. Then we could send these tokens to another account later.
+Ici nous allons utiliser le compte coinbase paramètré dans `conf/example/miner.conf` qui défini `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE` en tant qu'emetteur. En tant que "mineur", le compte recevra des tokens en récompense. Ensuite vous pourrez envoyer ces tokens à un autre compte plus tard.
 
 ### Le récepteur
 
@@ -36,47 +34,47 @@ Repeat passphrase:
 Address: n1SQe5d1NKHYFMKtJ5sNHPsSPVavGzW71Wy
 ```
 
-> When you run this command you will have a different wallet address with `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE`. Please use your generated address as the recipient.
+> Quand vous lancez cette commande, vous allez obtenir un nouveau portefeuille avec l'adresse suivante: `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE`. Nous allons utiliser cette adresse en tant que récepteur.
 
-The keystore file of the new wallet will be located in `$GOPATH/src/github.com/nebulasio/go-nebulas/keydir/`
+Votre clef privée "keystore file" de votre nouveau portefeuille se situe dans: `$GOPATH/src/github.com/nebulasio/go-nebulas/keydir/`
 
-## Start the Nodes
+## Démarrez les noeuds
 
-### Start Seed Node
+### Démarrez le noeud "Seed"
 
-Firstly, start a seed node as the first node in the local private chain.
+Premièrement, démarrez le noeud "seed" en tant que noeud principal.
 
 ```bash
 ./neb -c conf/default/config.conf
 ```
 
-### Start Miner Node
+### Démarrez le noeud "Miner"
 
-Secondly, start a miner node connecting to the seed node. This node will generate new blocks in the local private chain.
+Deuxièmenet, démarrez un noeud de minage connecté au noeud "seed". Ce noeud générera de nouveaux blocs sur votre chaine locale.
 
 ```bash
 ./neb -c conf/example/miner.conf
 ``` 
 
-> **How long until a new block will be minted?**
+> **Combien de temps doit-on attendre jusqu'à ce qu'un nouveau bloc soit miné?**
 > 
-> In Nebulas, DPoS is chosen as the temporary consensus algorithm before Proof-of-Devotion(PoD, described in [Technical White Paper](https://nebulas.io/docs/NebulasTechnicalWhitepaper.pdf)) is ready. In this consensus algorithm, each miner will mint a new block every 15 seconds.
+> Nebulas a choisi comme consensus temporaire le DPoS avant que le consensus Proof-of-Devotion soit prêt (PoD, described in [Technical White Paper](https://nebulas.io/docs/NebulasTechnicalWhitepaper.pdf)). Avec cet algorithme de consensus, chaque mineurs pourront miner un nouveau bloc toutes les 15 secondes.
 > 
-> In current context, we have to wait 315(=15*21) seconds to get a new block because there is only 1 miner working, among the 21 miners defined in `conf/default/genesis.conf`.
+> Dans ce contexte, nous devons attendre 315(=15*21) secondes pour obtenir un nouveau bloc parce qu'il a seulement un mineur en activité parmis les 21 mineurs définis dans `conf/default/genesis.conf`.
 
-Once a new block has been minted by the miner, the mining reward will be added to the coinbase wallet address used in `conf/example/miner.conf`, which is `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE`.
+Une fois qu'un nouveau bloc a été miné par le mineur, la récompense de minage sera ajoutée au portefeuille de l'adresse "coinbase" défini dans `conf/example/miner.conf`. Dans notre cas il s'agit de `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE`.
 
-## Interacting with Nodes
+## Interagir avec les noeuds
 
-Nebulas provides developers with HTTP API, gRPC API and CLI to interact with the running nodes. Here, we will share how to send a transaction using three methods with HTTP API ([API Module](https://github.com/nebulasio/wiki/blob/master/rpc.md) | [Admin Module](https://github.com/nebulasio/wiki/blob/master/rpc_admin.md)). 
+Nebulas fournit aux développeurs des api HTTP et gRPC ainsi qu'une CLI pour interagir avec les noeuds en activité. Nous allons détaillé ici trois méthodes avec les api HTTP ([API Module](https://github.com/nebulasio/wiki/blob/master/rpc.md) | [Admin Module](https://github.com/nebulasio/wiki/blob/master/rpc_admin.md)). 
 
-> The Nebulas HTTP Listener is defined in the node configuration. The default port of our seed node is `8685`.
+> Le "listener" HTTP est défini dans la configuration du noeud. Le port par défaut de votre noeud "seed" est `8685`.
 
-Firstly, check the sender's balance before sending a transaction.
+Avant tout, vérifiez la balance du compte émetteur avant d'envoyer une transaction.
 
-### Check Account State
+### Vérifier l'état d'un compte
 
-Fetch the state of sender's account `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE` with `/v1/user/accountstate` in API Module using `curl`.
+Récupérez l'état du compte émetteur `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE` en utilisant une rquête `curl` sur l'url suivante: `/v1/user/accountstate`.
 
 ```bash
 > curl -i -H Accept:application/json -X POST http://localhost:8685/v1/user/accountstate -d '{"address":"n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE"}'
@@ -91,11 +89,11 @@ Fetch the state of sender's account `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE` with `
 ```
 
 > **Note**
-> Type is used to check if this account is a smart contract account. `88` represents a smart contract account, and `87` is a non-contract account.
+> Le paramètre "type" est utilisé pour vérifier si le compte est un compte "smart contract". `88` représente un compte "smart contract", et `87` un compte qui n'est pas un "smart contract".
 
-As we can see, the recipient has been rewarded with some tokens for mining new blocks.
+Comme vous pouvez le voir, l'émetteur a été recompensé avec plusieurs tokens pour le minage de nouveaux blocs.
 
-Then let's check the recipient's account state.
+Vérifions maintenant l'état du compte récépteur.
 
 ```bash
 > curl -i -H Accept:application/json -X POST http://localhost:8685/v1/user/accountstate -d '{"address":"your_address"}'
@@ -110,13 +108,13 @@ Then let's check the recipient's account state.
 }
 ```
 
-The new account doesn't have tokens as expected.
+Le nouveau compte n'a aucun token.
 
-### Send a Transaction
+### Envoyer une Transaction
 
-Now let�s send a transaction in three methods to transfer some tokens from the sender to the recipient!
+Maintenant, essayons de transférer les tokens de l'émetteur au récepteur avec les trois méthodes.
 
-#### Sign & Send
+#### Signer & Envoyer
 
 In this manner, we can sign a transaction in an offline environment and then submit it to another online node. This is the safest method for everyone to submit a transaction without exposing your own private key to the Internet.
 
