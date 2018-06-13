@@ -50,7 +50,7 @@ Premièrement, démarrez le noeud "seed" en tant que noeud principal.
 
 ### Démarrez le noeud "Miner"
 
-Deuxièmenet, démarrez un noeud de minage connecté au noeud "seed". Ce noeud générera de nouveaux blocs sur votre chaine locale.
+Deuxièmement, démarrez un noeud de minage connecté au noeud "seed". Ce noeud générera de nouveaux blocs sur votre chaine locale.
 
 ```bash
 ./neb -c conf/example/miner.conf
