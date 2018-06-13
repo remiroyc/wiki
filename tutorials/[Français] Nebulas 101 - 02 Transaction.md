@@ -116,9 +116,9 @@ Maintenant, essayons de transférer les tokens de l'émetteur au récepteur avec
 
 #### Signer & Envoyer
 
-In this manner, we can sign a transaction in an offline environment and then submit it to another online node. This is the safest method for everyone to submit a transaction without exposing your own private key to the Internet.
+Avec cette méthode, il est possible de signer une transaction même avec un environement déconnecté et l'envoyer via un autre noeud en ligne. C'est la méthode la plus sûre pour tout ceux qui souhaitent soumettre une transaction sans exposer votre clef privée sur Internet.
 
-First, sign the transaction to get the raw data.
+Premièrement, signez la transaction pour obtenir une donnée brute.
 
 ```bash
 > curl -i -H 'Content-Type: application/json' -X POST http://localhost:8685/v1/admin/sign -d '{"transaction":{"from":"n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE","to":"n1QZMXSZtW7BUerroSms4axNfyBGyFGkrh5", "value":"1000000000000000000","nonce":1,"gasPrice":"1000000","gasLimit":"2000000"}, "passphrase":"passphrase"}'
@@ -127,7 +127,7 @@ First, sign the transaction to get the raw data.
 ```
 
 > **Note**
-> Nonce is a very important attribute in a transaction. It's designed to prevent [replay attacks](https://en.wikipedia.org/wiki/Replay_attack). For a given account, only after its transaction with nonce N has been accepted, will its transaction with nonce N+1 be processed. Thus, we have to check the latest nonce of the account on chain before preparing a new transaction.
+> `None` est un paramètre trés important pour une transaction. il est conçu pour prévenir des [attaques relais](https://en.wikipedia.org/wiki/Replay_attack). For a given account, only after its transaction with nonce N has been accepted, will its transaction with nonce N+1 be processed. Thus, we have to check the latest nonce of the account on chain before preparing a new transaction.
 
 Then, send the raw data to an online Nebulas node.
 
