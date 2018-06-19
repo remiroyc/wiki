@@ -139,11 +139,12 @@ Then, send the raw data to an online Nebulas node.
 
 #### Send with Passphrase
 
-If you trust a Nebulas node so much that you can delegate your keystore files to it, the second method is a good fit for you.
+Si vous accepter de faire confiance au noeud Nebulas, au point de lui transmettre votre clef privée, la seconde méthode sera la plus adaptée.
 
-First, upload your keystore files to the keydir folders in the trusted Nebulas node.
+Premièrement, publiez votre clef privée dans les répertoires "keydir" dans du noeud Nebulas de confiance.
 
-Then, send the transaction with your passphrase.
+Ensuite, envoyez la transaction avec votre passphrase.
+
 
 ```bash
 > curl -i -H 'Content-Type: application/json' -X POST http://localhost:8685/v1/admin/transactionWithPassphrase -d '{"transaction":{"from":"n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE","to":"n1QZMXSZtW7BUerroSms4axNfyBGyFGkrh5", "value":"1000000000000000000","nonce":2,"gasPrice":"1000000","gasLimit":"2000000"},"passphrase":"passphrase"}'
@@ -152,16 +153,16 @@ Then, send the transaction with your passphrase.
 ```
 
 > **Note**
-> Because we have sent a transaction with nonce 1 from the account `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE`, the new transaction with the same `from` should be increased by 1, to, namely, 2.
+> Du fait d'avoir envoyé une transaction avec un paramètre `none` à 1 du compte `n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE`, la nouvelle transaction avec le même paramètre `from` doit être incrémentée de 1 (et donc doit avoir comme valeur 2).
 
-#### Unlock & Send
+#### Dévérouiller & Envoyer
 
-This is the most dangerous method. You probably shouldn�t use it unless you have complete trust in the receiving Nebulas node.
+C'est la méthode la plus dangereuse. Vous ne devriez surement pas l'utiliser si nous n'avons totalement confiance dans le noeud Nebulas.
 
-First, upload your keystore files to the keydir folders in the trusted Nebulas node.
+Premièrement, envoyer votre clef privée dans les répertoires keydir du noeud Nebulas.
 
-Then unlock your accounts with your passphrase for a given duration in the node.
-The unit of the duration is nano seconds (300000000000=300s).
+Ensuite dé-vérouillez vos comptes avec votre passphrase pour une durée donnée.
+L'unité de durée est la nano-seconde (300000000000=300s)
 
 ```bash
 > curl -i -H 'Content-Type: application/json' -X POST http://localhost:8685/v1/admin/account/unlock -d '{"address":"n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE","passphrase":"passphrase","duration":"300000000000"}'
@@ -169,7 +170,7 @@ The unit of the duration is nano seconds (300000000000=300s).
 {"result":{"result":true}}
 ```
 
-After unlocking the account, everyone is able to send any transaction directly within the duration in that node without your authorization.
+Une fois le compte dévérouillé, n'importe qui est capable d'envoyer une transaction directement à ce noeud dans la plage de temps indiqué sans autorisation. 
 
 ```bash
 > curl -i -H 'Content-Type: application/json' -X POST http://localhost:8685/v1/admin/transaction -d '{"from":"n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE","to":"n1QZMXSZtW7BUerroSms4axNfyBGyFGkrh5", "value":"1000000000000000000","nonce":3,"gasPrice":"1000000","gasLimit":"2000000"}'
@@ -177,9 +178,9 @@ After unlocking the account, everyone is able to send any transaction directly w
 {"result":{"txhash":"8d69dea784f0edfb2ee678c464d99e155bca04b3d7e6cdba6c5c189f731110cf","contract_address":""}}
 ```
 
-## Transaction Receipt
+## Réception d'une transaction
 
-We'll get a `txhash` in three methods after sending a transaction successfully. The `txhash` value can be used to query the transaction status.
+Nous allons récupérer un paramètre `txhash` dans les trois méthodes indiquées ci-dessus aprés que la transaction soit correctement envoyée. Le paramètre `txhash` peut être utilisé pour requêter et obtenir le statut de la transaction.
 
 ```bash
 > curl -i -H Accept:application/json -X POST http://localhost:8685/v1/user/getTransactionReceipt -d '{"hash":"8d69dea784f0edfb2ee678c464d99e155bca04b3d7e6cdba6c5c189f731110cf"}'
@@ -187,15 +188,15 @@ We'll get a `txhash` in three methods after sending a transaction successfully. 
 {"result":{"hash":"8d69dea784f0edfb2ee678c464d99e155bca04b3d7e6cdba6c5c189f731110cf","chainId":100,"from":"n1FF1nz6tarkDVwWQkMnnwFPuPKUaQTdptE","to":"n1QZMXSZtW7BUerroSms4axNfyBGyFGkrh5","value":"1000000000000000000","nonce":"3","timestamp":"1524667888","type":"binary","data":null,"gas_price":"1000000","gas_limit":"2000000","contract_address":"","status":1,"gas_used":"20000"}}
 ```
 
-The `status` fields may be 0, 1 or 2.
+Le champs `status` peut être égal à 0, 1 ou 2.
 
-- **0: Failed.** It means the transaction has been submitted on chain but its execution failed.
-- **1: Successful.** It means the transaction has been submitted on chain and its execution succeeded.
-- **2: Pending.** It means the transaction hasn't been packed into a block.
+- **0: Failed.** Indique que la transaction a été envoyée sur la chaine mais que son execution a échoué.
+- **1: Successful.** Indique que la transaction a été envoyée sur la chaine et que son execution a réussi.
+- **2: Pending.** Indique que la transaction n'a pas été répliquée sur un bloc.
 
 ### Double Check
 
-Let's double check the recipient's balance. 
+Vérifions encore une fois la balance du récépteur.
 
 ```bash
 > curl -i -H Accept:application/json -X POST http://localhost:8685/v1/user/accountstate -d '{"address":"n1QZMXSZtW7BUerroSms4axNfyBGyFGkrh5"}'
@@ -203,8 +204,8 @@ Let's double check the recipient's balance.
 {"result":{"balance":"3000000000000000000","nonce":"0","type":87}}
 ```
 
-Here you should see a balance that is the total of all the successful transfers that you have executed.
+Ici vous devez voir que la balance correspond à la somme de toutes les transactions executées auparavant.
 
-### Next step: Tutorial 3
+### Prochaine étape: Tutorial 3
 
- [Write and run a smart contract with JavaScript](https://github.com/nebulasio/wiki/blob/master/tutorials/%5BEnglish%5D%20Nebulas%20101%20-%2003%20Smart%20Contracts%20JavaScript.md)
+ [Ecrire et executer un smart contact avec JavaScript](https://github.com/nebulasio/wiki/blob/master/tutorials/%5BEnglish%5D%20Nebulas%20101%20-%2003%20Smart%20Contracts%20JavaScript.md)
