@@ -27,18 +27,18 @@ Dans la version actuelle nous pouvons donc écrire les smart contracts avec Java
 
 Une brève spécification d'un smart contract:
 
-1. The Smart contract code must be a Prototype object;
-2. The Smart contract code must have an init() method, this method will only be executed once during deployment;
-3. The private methods in the smart contract must be prefixed with _ , and the private method cannot be a be directly called outside of the contract;
+1. Le code du Smart contract doit être un objet Prototype;
+2. Le code du Smart contract doit avoir une méthode init(). Cette méthode sera executée une seule fois durant le déploiement du smart contract;
+3. Les méthodes privées du smart contract doivent être préfixées avec _ , et une méthode privée ne peut pas directement être appelée à l'extérieur du contrat;
 
-Below we use JavaScript to write the first smart contract: bank safe.
-This smart contract needs to fulfill the following functions:
+Ci-dessous, nous allons écrire notre premier smart-contract: une coffre fort.
+Ce smart contract doit suivre les instructions suivantes:
 
-1. The user can deposit money to this bank safe.
-2. Users can withdraw money from this bank safe.
-3. Users can check the balance of the bank safe.
+1. L'utilisateur peut déposer de l'argent à la banque
+2. Les utilisateurs peuvent récupérer leur argent à la banque.
+3. Les utilisateurs peuvent vérifier la balance de leur compte bancaire.
 
-Smart contract example:
+Exemple du Smart contract:
 
 ```js
 'use strict';
